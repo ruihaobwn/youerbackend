@@ -1,0 +1,52 @@
+{
+  "pages": [
+    "pages/page1001/page1001",
+    "pages/page1002/page1002",
+    "pages/page1003/page1003",
+    "pages/index/index",
+    "pages/logs/logs",
+    "pages/super/singlepage/singlepage",
+    "pages/super/english/english",
+    "pages/super/phonics/phonics",
+    "pages/super/pinyin/pinyin",
+    "pages/super/shichi/shichi",
+    "pages/video/video",
+    "pages/subpage/card/card",
+    "pages/subpage/cardType/cardType",
+    "pages/subpage/video/video"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "优儿英语",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "borderStyle": "black",
+    "color": "#59607B",
+    "selectedColor": "#3091F2",
+    "backgroundColor": "#fff",
+    "list": [
+      {
+        "iconPath": "images/5c1de124436d3.png",
+        "selectedIconPath": "images/5c1de12443723.png",
+        "text": "优儿说",
+        "pagePath": "pages/page1001/page1001"
+      },
+      {
+        "iconPath": "images/5c1de124757a8.png",
+        "selectedIconPath": "images/5c1de124757f0.png",
+        "text": "绘本馆",
+        "pagePath": "pages/page1002/page1002"
+      },
+      {
+        "iconPath": "images/5c1de124a49b6.png",
+        "selectedIconPath": "images/5c1de124a49eb.png",
+        "text": "英语动画",
+        "pagePath": "pages/page1003/page1003"
+      }
+    ]
+  },
+  "networkTimeout": {},
+  "debug": false
+}

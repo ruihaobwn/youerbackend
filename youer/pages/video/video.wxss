@@ -1,0 +1,4 @@
+/* pages/video/video.wxss */
+page {
+  background-size: 100%;
+}

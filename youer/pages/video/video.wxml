@@ -1,0 +1,4 @@
+<!--pages/video/video.wxml-->
+<view style='width=750rpx'>
+  <video style="height=100%;height=100%" src='{{src}}' controls binderror="videoErrorCallback"></video>
+</view>

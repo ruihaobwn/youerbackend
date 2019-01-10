@@ -1,0 +1,11 @@
+<!--pages/super/singlepage/singlepage.wxml-->
+<swiper style='height: 80vh' bindchange='onSlideChange'>
+  <swiper-item wx:for="{{imageList}}" wx:key="key">
+    <image src='{{item.src}}' style='height: 100%' bindtap='play' data-audio='{{item.audio}}'></image>
+  </swiper-item>
+>
+</swiper>
+<view class='menu'>
+  <button style='width:50%' bindtap='startRecord' data-action='{{record_text}}'>{{record_text}}</button>
+  <button style='width:50%' bindtap='openVideo'>视频</button>
+</view>

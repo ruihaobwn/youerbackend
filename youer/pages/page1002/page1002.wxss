@@ -1,0 +1,15 @@
+page {
+  background-size: 100%;
+  margin-left: auto;
+}
+
+.flex-container {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.flex-item {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}

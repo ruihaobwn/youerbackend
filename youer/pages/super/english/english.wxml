@@ -1,0 +1,7 @@
+<!--pages/super/english/english.wxml-->
+<view class="container">
+  <view wx:for-items="{{typeList}}" wx:key="{{item.key}}" class="type" bindtap="getOneImg">
+    <image style='width:100px;height:100px;' src="{{item.src}}"></image>
+    <text>{{item.title}}</text>
+  </view>
+</view>

@@ -1,0 +1,4 @@
+<!--pages/video/video.wxml-->
+<view class="section tc">
+  <video src='{{src}}' controls binderror="videoErrorCallback"></video>
+</view>

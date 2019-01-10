@@ -1,0 +1,14 @@
+/* pages/super/english/english.wxss */
+.container{
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  align-content: flex-start
+}
+
+.type{
+  display: flex;
+  flex-flow: column;
+  align-items: center
+}
