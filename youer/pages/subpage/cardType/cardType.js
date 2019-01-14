@@ -24,7 +24,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    const product_id = options.id
+    var product_id = options.id
     request.sendRequest({
       url: '/card/card_type',
       data: {
@@ -39,8 +39,9 @@ Page({
     })
   },
   openCard: function (e){
-    console.log(e)
-    const cardType_id = e.currentTarget.dataset.id
+    var cardType_id = e.currentTarget.dataset.id
+    var voicenum = e.currentTarget.dataset.voicenum
+    console.log(voicenum)
     wx.navigateTo({
       url: '/pages/subpage/card/card?id=' + cardType_id
     })

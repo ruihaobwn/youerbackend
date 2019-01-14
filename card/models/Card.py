@@ -42,9 +42,7 @@ def auto_delete_file_on_change(sender, instance, **kwargs):
         return False
 
     new_picture = instance.picture
-    print(new_picture)
     new_video = instance.video
-    print(new_video)
     if old_picture and not old_picture == new_picture:
         if os.path.isfile(old_picture.path):
             os.remove(old_picture.path)

@@ -13,7 +13,8 @@
     "pages/video/video",
     "pages/subpage/card/card",
     "pages/subpage/cardType/cardType",
-    "pages/subpage/video/video"
+    "pages/subpage/video/video",
+    "pages/subpage/simpleCard/simpleCard"
   ],
   "window": {
     "backgroundTextStyle": "light",

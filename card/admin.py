@@ -9,7 +9,7 @@ class ProductTypeAdmin(admin.ModelAdmin):
 
 @admin.register(models.CardType)
 class CardTypeAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'image_file')
+    list_display = ('id', 'title', 'image_file', 'voice_num')
 
 
 @admin.register(models.Card)

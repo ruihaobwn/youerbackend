@@ -5,4 +5,4 @@ from common.serializers.BaseSerializer import BaseSerializer
 class CardTypeSerializer(BaseSerializer):
     class Meta:
         model = CardType
-        fields = ('id', 'title', 'image_file')
+        fields = ('id', 'title', 'image_file', 'voice_num')

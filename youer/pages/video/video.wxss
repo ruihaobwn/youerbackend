@@ -1,4 +1,2 @@
 /* pages/video/video.wxss */
-page {
-  background-size: 100%;
-}
+@import "/lib/weui.wxss";
