@@ -1,4 +1,4 @@
-@charset 'utf-8';
+@import 'lib/weui.wxss';
 
 button:after {
   border:none;

@@ -1,6 +1,4 @@
 var request = require('../../../utils/request.js')
-var recorderManager = wx.getRecorderManager()
-var innerAudioContext = wx.createInnerAudioContext()
 
 Page({
   data: {
@@ -23,14 +21,15 @@ Page({
     card_data: {
       count: 0,
       results: []
-    }
+    },
+    record_text: '录音'
   },
 
   getCard: function () {
     request.sendRequest({
       url: '/card/card',
       data: {
-        card_type_id: this.data.card_type_id,
+        card_type: this.data.card_type_id,
         limit: this.data.pagination.limit,
         offset: this.data.pagination.offset
       },
@@ -66,6 +65,8 @@ Page({
 
   onLoad: function (options) {
     var card_type_id = options.id
+    this.recorderManager = wx.getRecorderManager()
+    this.innerAudioContext = wx.createInnerAudioContext()
     this.setData({ card_type_id: card_type_id })
     this.load = true
     request.sendRequest({
@@ -83,11 +84,11 @@ Page({
         this.getCard()
       }
     })
-    innerAudioContext.onError((res) => {
+    this.innerAudioContext.onError((res) => {
       console.log(res.errMsg)
       console.log(res.errCode)
     })
-    innerAudioContext.onEnded(() => {
+    this.innerAudioContext.onEnded(() => {
       if (this.data.swiper_props.autoplay && this.data.swiper_props.current < this.data.card_data.count - 1) {
         this.data.swiper_props.current++
         this.setData({
@@ -141,8 +142,31 @@ Page({
 
   playWord: function (url) {
     if (!!url) {
-      innerAudioContext.src = url
-      innerAudioContext.play()
+      this.innerAudioContext.src = url
+      this.innerAudioContext.play()
     }
+  },
+  startRecord: function (e) {
+    var action = e.currentTarget.dataset.action
+    if (action == '录音') {
+      this.setData({ record_text: '停止' })
+      this.recorderManager.start()
+    }
+    else if (action == '停止') {
+      this.setData({ record_text: '录音' })
+      this.recorderManager.stop()
+      this.recorderManager.onStop((res) => {
+        this.tempFilePath = res.tempFilePath
+      })
+    }
+  },
+  playRecord: function (e) {
+    if (!!this.tempFilePath) {
+      this.innerAudioContext.src = this.tempFilePath
+      this.innerAudioContext.play()
+    }
+  },
+  onUnload: function(e){
+    this.innerAudioContext.destroy()
   }
 })

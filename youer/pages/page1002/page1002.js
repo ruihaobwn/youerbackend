@@ -5,13 +5,7 @@ Page({
   data: {
     "carousel1": {
       "style": "height:370rpx;width:750rpx;",
-      "content": [{
-        "pic": "https: \/\/img.zhichiwangluo.com\/zcimgdir\/album\/file_5b6bf89c6233c.png",
-        "name": "轮播1"
-      }, {
-        "pic": "https: \/\/img.zhichiwangluo.com\/zcimgdir\/album\/file_5b6bf89c6233c.png",
-        "name": "轮播2"
-      }],
+      "content": [],
       "customFeature": {
         "autoplay": true,
         "interval": 2,
@@ -19,16 +13,16 @@ Page({
         "indicatorColor": "rgba(0, 0, 0, .3)",
       }
     },
-    "free_vessel2": {
-      "style": "width:682rpx;box-shadow:rgba(153, 153, 153, 0.24) 0rpx 0rpx 7rpx;margin-bottom:auto;margin-left:auto;margin-right:auto;margin-top:18rpx;",
-      "content": [{
-        "style": "width:160rpx",
-        "pic_style": "height:82rpx;width:82rpx;",
-        "pic": "http:\/\/img.zhichiwangluo.com\/zcimgdir\/album\/file_5b287cfed6c25.png",
-        "text": "蔬菜与水果",
-        "text_style": "color:rgb(68, 68, 68);font-size:28rpx;",
-        "itemIndex": 0,
-      }]
+    "bookType": {
+      "style": "width:682rpx; margin-left:auto;margin-right:auto;margin-top:18rpx;",
+      "content": []
+    },
+    "scroll_data": {
+      "style": "width:750rpx",
+      "item_style": "margin-left:50rpx;width:300rpx;height:300rpx",
+      "image_style": "height:300rpx;width:300rpx;",
+      "text_style": "color:rgb(68, 68, 68);font-size:28rpx;",
+      "content": []
     }
   },
 
@@ -36,10 +30,11 @@ Page({
     request.sendRequest({
       url: '/poster',
       data: {
-        type: 'youershuo'
+        type: 'Library'
       },
       success: res => {
-        const carousel = res.map((item) => {
+        const results = res.results
+        const carousel = results.map((item) => {
           const oneItem = {};
           oneItem.pic = item.image;
           oneItem.name = item.name;
@@ -50,5 +45,68 @@ Page({
         })
       }
     })
+    request.sendRequest({
+      url: '/library/book_type',
+      data: {
+        limit: 8
+      },
+      success: res => {
+        const results = res.results
+        const types = results.map(item => {
+          const oneItem = {
+            "style": "width:160rpx",
+            "pic_style": "height:82rpx;width:82rpx;",
+            "text_style": "color:rgb(68, 68, 68);font-size:28rpx;"
+          }
+          oneItem.pic = item.image_file
+          oneItem.text = item.title
+          oneItem.itemIndex = item.id
+          return oneItem
+        })
+        this.setData({
+          'bookType.content': types
+        })
+      }
+    })
+  },
+  getBooks: function(e){
+    var data = e.currentTarget.dataset
+    var type_id = data.typeid
+    request.sendRequest({
+      url: '/library/volume',
+      data: {
+        book_type: type_id
+      },
+      success: res => {
+        const results = res.results
+        const types = results.map(item => {
+          const oneItem = {}
+          oneItem.image = item.picture
+          oneItem.text = item.name
+          oneItem.itemIndex = item.id
+          oneItem.has_subbook = item.has_subbook
+          return oneItem
+        })
+        this.setData({
+          'scroll_data.content': types
+        })
+      }
+    })
+  },
+  openBook: function(e){
+    var data = e.currentTarget.dataset
+    var book_id = data.bookid
+    var has_subbook = data.subbook
+    var name = data.name
+    if(!has_subbook){
+      wx.navigateTo({
+        url: '/pages/subpage/bookPage/bookPage?from=volume&id='+book_id
+      })
+    }
+    else{
+      wx.navigateTo({
+        url: '/pages/subpage/subBook/subBook?id=' + book_id + '&name=' + name
+      })
+    }
   }
 })

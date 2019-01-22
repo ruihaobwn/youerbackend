@@ -14,7 +14,9 @@
     "pages/subpage/card/card",
     "pages/subpage/cardType/cardType",
     "pages/subpage/video/video",
-    "pages/subpage/simpleCard/simpleCard"
+    "pages/subpage/simpleCard/simpleCard",
+    "pages/subpage/bookPage/bookPage",
+    "pages/subpage/subBook/subBook"
   ],
   "window": {
     "backgroundTextStyle": "light",

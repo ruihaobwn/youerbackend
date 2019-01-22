@@ -2,8 +2,8 @@ var request = require('../../../utils/request.js')
 
 Page({
   data: {
-    card_type_id: null,
-    all_card_titles: [],
+    book_id: null,
+    from_type: 'volume',
     turn_page: {
       style: "position:absolute;right:40rpx;top:40rpx",
       text: '翻页关'
@@ -12,12 +12,6 @@ Page({
     pagination: {
       limit: 10,
       offset: 0
-    },
-    // 发音点击区域
-    voice_area: {
-      // 单词发音
-      word_style: "position:absolute;height:540rpx;width:510rpx; left:120rpx;top:140rpx;",
-      sentence_style: "position:absolute;height:130rpx;right:50rpx; left:50rpx;top:740rpx;"
     },
     card_style: "height:80vh;width:100wh",
     swiper_props: {
@@ -31,26 +25,24 @@ Page({
     record_text: '录音'
   },
 
-  getCard: function(){
+  getCard: function () {
+    var data = {
+      limit: this.data.pagination.limit,
+      offset: this.data.pagination.offset
+    }
+    if (this.data.from_type === 'volume'){
+      data.volume = this.data.book_id
+    }
+    else{
+      data.book = this.data.book_id
+    }
     request.sendRequest({
-      url: '/card/card',
-      data: {
-        card_type: this.data.card_type_id,
-        limit: this.data.pagination.limit,
-        offset: this.data.pagination.offset
-      },
+      url: '/library/bookpage',
+      data: data,
       success: res => {
         var results = []
-        for (var j = 0; j < res.results.length; ++j){
-
+        for (var j = 0; j < res.results.length; ++j) {
           var card = res.results[j]
-          var card_audio = {}
-          var audio_array = card.card_audio
-          for (var i = 0; i < audio_array.length; ++i) {
-            var key = audio_array[i].type
-            card_audio[key] = audio_array[i].url
-          }
-          card.card_audio = card_audio
           results.push(card)
         }
         var card_list = this.data.card_data.results.concat(results)
@@ -60,42 +52,30 @@ Page({
         this.setData({
           card_data: card_data
         })
-        if(this.load){
-          var card_audio = this.data.card_data.results[0].card_audio
-          this.playWord(card_audio.Word)
-          this.load=false
+        if (this.load) {
+          var card = this.data.card_data.results[0]
+          this.playWord(card.audio_url)
+          this.load = false
         }
       }
-    }) 
+    })
   },
 
   onLoad: function (options) {
-    var card_type_id = options.id
     this.recorderManager = wx.getRecorderManager()
     this.innerAudioContext = wx.createInnerAudioContext()
-    this.setData({card_type_id: card_type_id})
+    var book_id = options.id
+    var from_type = options.from
+    this.setData({ book_id: book_id, from_type: from_type })
     this.load = true
-    request.sendRequest({
-      url: '/card/card',
-      data: {
-        title: true,
-        card_type: card_type_id
-      },
-      success: res => {
-        var results = res.results
-        var count = res.count
-        this.setData({
-          all_card_titles: results
-        })
-        this.getCard()
-      }
-    })
+    this.getCard()
+      
     this.innerAudioContext.onError((res) => {
       console.log(res.errMsg)
       console.log(res.errCode)
     })
     this.innerAudioContext.onEnded(() => {
-      if(this.data.swiper_props.autoplay && this.data.swiper_props.current<this.data.card_data.count-1){
+      if (this.data.swiper_props.autoplay && this.data.swiper_props.current < this.data.card_data.count - 1) {
         this.data.swiper_props.current++
         this.setData({
           swiper_props: this.data.swiper_props
@@ -104,29 +84,29 @@ Page({
     })
   },
 
-  changeCurrent: function(e){
+  changeCurrent: function (e) {
     var current = e.detail.current
     this.data.swiper_props.current = current
     // auto play word when change card
-    var url = this.data.card_data.results[current].card_audio.Word
+    var url = this.data.card_data.results[current].audio_url
     this.playWord(url)
-    
+
     var length = this.data.card_data.results.length
     var all_card_count = this.data.card_data.count
     var limit = this.data.pagination.limit
     // when remain two card, get new card
-    if (length<all_card_count && current<length-3){
-      this.data.pagination.offset = current*limit
+    if (length < all_card_count && current < length - 3) {
+      this.data.pagination.offset = current * limit
       this.getCard()
     }
   },
-  changeTurnPage: function(e){
+  changeTurnPage: function (e) {
     var dataset = e.currentTarget.dataset
     var text = dataset.text
-    if (text==='翻页关'){
+    if (text === '翻页关') {
       this.data.turn_page.text = '翻页开'
       this.data.swiper_props.autoplay = false
-    }else{
+    } else {
       this.data.turn_page.text = '翻页关'
       this.data.swiper_props.autoplay = true
     }
@@ -141,21 +121,14 @@ Page({
       })
     }
   },
-  play_word: function(e){
+  play_word: function (e) {
     var dataset = e.currentTarget.dataset
     this.playWord(dataset.url)
   },
 
-  playWord: function(url){
+  playWord: function (url) {
     if (!!url) {
       this.innerAudioContext.src = url
-      this.innerAudioContext.play()
-    }
-  },
-  play_sentence: function(e){
-    var dataset = e.currentTarget.dataset
-    if(!!dataset.url){
-      this.innerAudioContext.src = dataset.url
       this.innerAudioContext.play()
     }
   },
@@ -173,17 +146,11 @@ Page({
       })
     }
   },
-  playRecord: function(e){
-    if(!!this.tempFilePath){
+  playRecord: function (e) {
+    if (!!this.tempFilePath) {
       this.innerAudioContext.src = this.tempFilePath
       this.innerAudioContext.play()
     }
-  },
-  openVideo: function(e){
-    var index = this.data.swiper_props.current
-    var videosrc = this.data.card_data.results[index].video
-    var url = '/pages/video/video?videosrc=' + videosrc
-    wx.navigateTo({ url: url })
   },
   onUnload: function (e) {
     this.innerAudioContext.destroy()

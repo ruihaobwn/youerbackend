@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'drf_yasg',
     'card',
     'common',
+    'library',
+    'video',
 ]
 
 MIDDLEWARE = [
