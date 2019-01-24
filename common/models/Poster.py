@@ -8,6 +8,7 @@ class Poster(BaseModel):
     TYPE_CHOICES = (
         ('Card', '单词页面'),
         ('Library', '绘本馆页面'),
+        ('Video', '视频页面'),
     )
     name = models.CharField(verbose_name=u'名称', max_length=100)
     type = models.CharField(verbose_name=u'类型', choices=TYPE_CHOICES, max_length=100)

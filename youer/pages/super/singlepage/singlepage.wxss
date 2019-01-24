@@ -1,6 +1,0 @@
-/* pages/super/singlepage/singlepage.wxss */
-.menu{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around
-}

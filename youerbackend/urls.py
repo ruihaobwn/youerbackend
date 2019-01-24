@@ -44,6 +44,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/v1/card/', include('card.urls')),
     path('api/v1/library/', include('library.urls')),
+    path('api/v1/video/', include('video.urls')),
     path('api/v1/', include('common.urls')),
     re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=None), name='schema-json'),
     re_path(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=None), name='schema-swagger-ui'),
