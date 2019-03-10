@@ -5,7 +5,6 @@
     "pages/page1003/page1003",
     "pages/index/index",
     "pages/logs/logs",
-    "pages/video/video",
     "pages/subpage/card/card",
     "pages/subpage/cardType/cardType",
     "pages/subpage/video/video",
@@ -27,20 +26,20 @@
     "backgroundColor": "#fff",
     "list": [
       {
-        "iconPath": "images/5c1de124436d3.png",
-        "selectedIconPath": "images/5c1de12443723.png",
+        "iconPath": "images/youer.png",
+        "selectedIconPath": "images/youer2.png",
         "text": "优儿说",
         "pagePath": "pages/page1001/page1001"
       },
       {
-        "iconPath": "images/5c1de124757a8.png",
-        "selectedIconPath": "images/5c1de124757f0.png",
+        "iconPath": "images/book.png",
+        "selectedIconPath": "images/book2.png",
         "text": "绘本馆",
         "pagePath": "pages/page1002/page1002"
       },
       {
-        "iconPath": "images/5c1de124a49b6.png",
-        "selectedIconPath": "images/5c1de124a49eb.png",
+        "iconPath": "images/video.png",
+        "selectedIconPath": "images/video2.png",
         "text": "英语动画",
         "pagePath": "pages/page1003/page1003"
       }

@@ -20,3 +20,9 @@ page {
   flex-direction: row;
   justify-content: space-around
 }
+
+.text-center{
+  display: flex;
+  align-items: center;
+  justify-content: center
+}

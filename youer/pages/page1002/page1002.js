@@ -17,6 +17,10 @@ Page({
       "style": "width:682rpx; margin-left:auto;margin-right:auto;margin-top:18rpx;",
       "content": []
     },
+    "category_text": {
+      "style": "color:gray",
+      "title": "所有绘本"
+    },
     "scroll_data": {
       "style": "width:750rpx",
       "item_style": "margin-left:50rpx;width:300rpx;height:300rpx",
@@ -68,15 +72,18 @@ Page({
         })
       }
     })
+    this.getBookByType(0)
   },
-  getBooks: function(e){
-    var data = e.currentTarget.dataset
-    var type_id = data.typeid
+
+  getBookByType: function(type_id){
+    var params = {}
+    if (type_id>0){
+      params.book_type = type_id
+    }
+
     request.sendRequest({
       url: '/library/volume',
-      data: {
-        book_type: type_id
-      },
+      data: params,
       success: res => {
         const results = res.results
         const types = results.map(item => {
@@ -93,6 +100,17 @@ Page({
       }
     })
   },
+
+  getBooks: function(e){
+    var data = e.currentTarget.dataset
+    var type_id = data.typeid
+    var title = data.title
+    this.getBookByType(type_id)
+    this.setData({
+      'category_text.title': title 
+    })
+  },
+
   openBook: function(e){
     var data = e.currentTarget.dataset
     var book_id = data.bookid

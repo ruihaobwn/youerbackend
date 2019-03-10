@@ -1,5 +1,6 @@
 <!--card for two audio voice-->
 <view class="app">
+
   <swiper current='{{swiper_props.current}}' style='{{card_style}}' bindchange='changeCurrent'>
     <swiper-item wx:for="{{card_data.results}}">
       <view style='{{voice_area.word_style}}' catchtap='play_word' data-url="{{item.card_audio.Word}}"></view>
@@ -14,5 +15,6 @@
     <button style='width:30%' bindtap='playRecord'>播放</button>
     <button style='width:40%' bindtap='openVideo'>视频</button>
   </view>
-  <text style='{{turn_page.style}}' catchtap='changeTurnPage' data-text='{{turn_page.text}}'>{{turn_page.text}}</text>
+  <text class='text-center' style='{{page_number.style}}'>- {{page_number.current}}/{{card_data.count}} -</text>
+  <image style='{{turn_page.style}}' src='{{turn_page.src}}' catchtap='changeTurnPage' data-text='{{turn_page.text}}'></image>
 </view>

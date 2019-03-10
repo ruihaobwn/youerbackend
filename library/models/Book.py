@@ -5,6 +5,7 @@ import os
 from django.dispatch import receiver
 
 
+# 卷 一卷中有多本书
 class Volume(BaseModel):
     name = models.CharField(verbose_name=u'绘本名称', max_length=80, unique=True)
     picture = models.FileField(verbose_name=u'绘本图片', max_length=80)
@@ -19,6 +20,7 @@ class Volume(BaseModel):
         return self.name
 
 
+# 绘本
 class Book(BaseModel):
     name = models.CharField(verbose_name=u'主题', max_length=80, unique=True)
     picture = models.FileField(verbose_name=u'子绘本图片', max_length=80)

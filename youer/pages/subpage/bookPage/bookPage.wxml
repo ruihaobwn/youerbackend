@@ -7,8 +7,8 @@
     </swiper-item>
   </swiper>
   <view class='menu'>
-    <button style='width:30%' bindtap='startRecord' data-action='{{record_text}}'>{{record_text}}</button>
-    <button style='width:30%' bindtap='playRecord'>播放</button>
+    <button style='width:30%' disabled='{{record_disable}}' bindtap='startRecord' data-action='{{record_text}}'>{{record_text}}</button>
+    <button style='width:30%' disabled='{{record_disable}}' bindtap='playRecord'>播放</button>
   </view>
   <text style='{{turn_page.style}}' catchtap='changeTurnPage' data-text='{{turn_page.text}}'>{{turn_page.text}}</text>
 </view>

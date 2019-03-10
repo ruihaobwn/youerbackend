@@ -13,6 +13,7 @@ Page({
         "indicatorColor": "rgba(0, 0, 0, .3)",
       }
     },
+    // 游戏模块功能，暂时不使用
     "free_vessel2": {
       "hidden": true,
       "style": "width:750rpx;height:420rpx;background-color:rgb(255, 255, 255);",
@@ -91,7 +92,7 @@ Page({
         const enType = results.map(item=>{
           const oneItem = {
             "style": "width:160rpx",
-            "pic_style": "height:82rpx;width:82rpx;",
+            "pic_style": "height:82rpx;width:82rpx;border-radius:20rpx",
             "text_style": "color:rgb(68, 68, 68);font-size:28rpx;"
           }
           oneItem.pic = item.image

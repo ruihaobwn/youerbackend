@@ -68,15 +68,17 @@ Page({
         })
       }
     })
+    this.getVideoByType(0)
   },
-  getVideos: function (e) {
-    var data = e.currentTarget.dataset
-    var type_id = data.typeid
+
+  getVideoByType: function(type_id){
+    var params = {}
+    if (type_id > 0){
+      params.video_type = type_id
+    }
     request.sendRequest({
       url: '/video/video',
-      data: {
-        video_type: type_id
-      },
+      data: params,
       success: res => {
         const results = res.results
         const types = results.map(item => {
@@ -94,6 +96,13 @@ Page({
       }
     })
   },
+
+  getVideos: function (e) {
+    var data = e.currentTarget.dataset
+    var type_id = data.typeid
+    this.getVideoByType(type_id)
+  },
+
   openVideo: function (e) {
     var data = e.currentTarget.dataset
     var video_url = data.videourl

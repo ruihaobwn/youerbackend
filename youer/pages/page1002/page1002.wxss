@@ -13,3 +13,13 @@ page {
   flex-flow: column;
   align-items: center;
 }
+
+.page-body {
+  width: 100% 
+}
+
+.text-center{
+  display: flex;
+  align-items: center;
+  justify-content: center
+}

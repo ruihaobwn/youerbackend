@@ -1,1 +1,6 @@
 /* pages/subpage/video/video.wxss */
+
+.videoplayer{
+  width: 750rpx;
+  height: 560rpx
+}

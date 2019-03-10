@@ -4,10 +4,13 @@
     <template is="zcCarousel" data="{{data:carousel1}}"></template>
   </view>
   <view class="flex-container" style='{{bookType.style}}'>
-    <view wx:for="{{bookType.content}}" class='flex-item' style='{{item.style}}' wx:key="{{item.itemIndex}}" catchtap='getBooks' data-typeid='{{item.itemIndex}}'>
+    <view wx:for="{{bookType.content}}" class='flex-item' style='{{item.style}}' wx:key="{{item.itemIndex}}" catchtap='getBooks' data-typeid='{{item.itemIndex}}' data-title='{{item.text}}'>
       <image style='{{item.pic_style}}' src="{{item.pic}}"></image>
       <text style='{{item.text_style}}'>{{item.text}}</text>
     </view>
+  </view>
+  <view class='page-body'>
+    <text class='text-center' style='{{category_text.style}}'>- {{category_text.title}} -</text>
   </view>
   <view class="flex-container" style='{{scroll_data.style}}'>
     <view wx:for="{{scroll_data.content}}" class='flex-item' style='{{scroll_data.item_style}}' wx:key="{{item.itemIndex}}" catchtap='openBook' data-bookid='{{item.itemIndex}}' data-subbook='{{item.has_subbook}}' data-name='{{item.text}}'>

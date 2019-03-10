@@ -5,10 +5,11 @@ Page({
     book_id: null,
     from_type: 'volume',
     turn_page: {
-      style: "position:absolute;right:40rpx;top:40rpx",
-      text: '翻页关'
+      style: "position:absolute;right:40rpx;top:40rpx;width:60rpx",
+      text: '翻页关',
+      src: '/images/pageopen.png'
     },
-
+    record_disable: true,
     pagination: {
       limit: 10,
       offset: 0
@@ -22,7 +23,8 @@ Page({
       count: 0,
       results: []
     },
-    record_text: '录音'
+    record_text: '录音',
+    record_disable: true
   },
 
   getCard: function () {
@@ -54,7 +56,11 @@ Page({
         })
         if (this.load) {
           var card = this.data.card_data.results[0]
-          this.playWord(card.audio_url)
+          if (card.audio_url){
+            this.playWord(card.audio_url)
+          } else{
+            setTimeout(this.play_next, 2000)
+          }
           this.load = false
         }
       }
@@ -67,6 +73,7 @@ Page({
     var book_id = options.id
     var from_type = options.from
     this.setData({ book_id: book_id, from_type: from_type })
+    // 判断是否为第一次加载，第一次加载自动播放
     this.load = true
     this.getCard()
       
@@ -105,14 +112,17 @@ Page({
     var text = dataset.text
     if (text === '翻页关') {
       this.data.turn_page.text = '翻页开'
+      this.data.record_disable = false
       this.data.swiper_props.autoplay = false
     } else {
+      this.data.record_disable = true
       this.data.turn_page.text = '翻页关'
       this.data.swiper_props.autoplay = true
     }
     this.setData({
       turn_page: this.data.turn_page,
-      swiper_props: this.data.swiper_props
+      swiper_props: this.data.swiper_props,
+      record_disable: this.data.record_disable
     })
     if (this.data.swiper_props.autoplay && this.data.swiper_props.current < this.data.card_data.count - 1) {
       this.data.swiper_props.current++
@@ -154,5 +164,14 @@ Page({
   },
   onUnload: function (e) {
     this.innerAudioContext.destroy()
+  },
+  
+  play_next: function(e) {
+    if (this.data.swiper_props.autoplay && this.data.swiper_props.current < this.data.card_data.count - 1) {
+      this.data.swiper_props.current++
+      this.setData({
+        swiper_props: this.data.swiper_props
+      })
+    }
   }
 })

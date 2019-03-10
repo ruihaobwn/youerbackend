@@ -5,8 +5,14 @@ Page({
     card_type_id: null,
     all_card_titles: [],
     turn_page: {
-      style: "position:absolute;right:40rpx;top:40rpx",
-      text: '翻页关'
+      style: "position:absolute;right:40rpx;top:40rpx;width:60rpx;height:60rpx",
+      text: '翻页关',
+      src: '/images/pageopen.png'
+    },
+    
+    page_number: {
+      style: "position:absolute;top:0rpx;left:30rpx",
+      current: 1
     },
 
     pagination: {
@@ -16,8 +22,8 @@ Page({
     // 发音点击区域
     voice_area: {
       // 单词发音
-      word_style: "position:absolute;height:540rpx;width:510rpx; left:120rpx;top:140rpx;",
-      sentence_style: "position:absolute;height:130rpx;right:50rpx; left:50rpx;top:740rpx;"
+      word_style: "position:absolute;height:50vh;width:70vw;left:15vw;top:10vh",
+      sentence_style: "position:absolute;height:10vh;width:90vw;left:5vw;top:63vh"
     },
     card_style: "height:80vh;width:100wh",
     swiper_props: {
@@ -42,7 +48,6 @@ Page({
       success: res => {
         var results = []
         for (var j = 0; j < res.results.length; ++j){
-
           var card = res.results[j]
           var card_audio = {}
           var audio_array = card.card_audio
@@ -85,6 +90,9 @@ Page({
         var results = res.results
         var count = res.count
         this.setData({
+          
+        })
+        this.setData({
           all_card_titles: results
         })
         this.getCard()
@@ -94,11 +102,14 @@ Page({
       console.log(res.errMsg)
       console.log(res.errCode)
     })
+    this.innerAudioContext.onPlay((res) => {
+      console.log('start play')
+    })
     this.innerAudioContext.onEnded(() => {
       if(this.data.swiper_props.autoplay && this.data.swiper_props.current<this.data.card_data.count-1){
         this.data.swiper_props.current++
         this.setData({
-          swiper_props: this.data.swiper_props
+          swiper_props: this.data.swiper_props,
         })
       }
     })
@@ -107,6 +118,9 @@ Page({
   changeCurrent: function(e){
     var current = e.detail.current
     this.data.swiper_props.current = current
+    this.setData({
+      'page_number.current': current+1
+    })
     // auto play word when change card
     var url = this.data.card_data.results[current].card_audio.Word
     this.playWord(url)
@@ -125,9 +139,11 @@ Page({
     var text = dataset.text
     if (text==='翻页关'){
       this.data.turn_page.text = '翻页开'
+      this.data.turn_page.src = '/images/pageclose.png'
       this.data.swiper_props.autoplay = false
     }else{
       this.data.turn_page.text = '翻页关'
+      this.data.turn_page.src = '/images/pageopen.png'
       this.data.swiper_props.autoplay = true
     }
     this.setData({
@@ -137,7 +153,7 @@ Page({
     if (this.data.swiper_props.autoplay && this.data.swiper_props.current < this.data.card_data.count - 1) {
       this.data.swiper_props.current++
       this.setData({
-        swiper_props: this.data.swiper_props
+        swiper_props: this.data.swiper_props,
       })
     }
   },
@@ -182,7 +198,7 @@ Page({
   openVideo: function(e){
     var index = this.data.swiper_props.current
     var videosrc = this.data.card_data.results[index].video
-    var url = '/pages/video/video?videosrc=' + videosrc
+    var url = '/pages/subpage/video/video?videosrc=' + videosrc
     wx.navigateTo({ url: url })
   },
   onUnload: function (e) {
