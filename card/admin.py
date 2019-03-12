@@ -15,9 +15,3 @@ class CardTypeAdmin(admin.ModelAdmin):
 @admin.register(models.Card)
 class CardAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'picture', 'card_type', 'video')
-
-
-@admin.register(models.CardAudio)
-class CardResourceAdmin(admin.ModelAdmin):
-    list_display = ('id', 'type', 'url')
-

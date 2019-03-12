@@ -13,7 +13,7 @@ class Poster(BaseModel):
     name = models.CharField(verbose_name=u'名称', max_length=100)
     type = models.CharField(verbose_name=u'类型', choices=TYPE_CHOICES, max_length=100)
     image = models.FileField(verbose_name=u'图片', upload_to='poster')
-    link_url = models.CharField(verbose_name=u'跳转地址', max_length=100)
+    link_url = models.CharField(verbose_name=u'跳转地址', max_length=100, null=True, blank=True)
 
     class Meta:
         verbose_name = '海报图'

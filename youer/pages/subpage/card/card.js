@@ -46,19 +46,7 @@ Page({
         offset: this.data.pagination.offset
       },
       success: res => {
-        var results = []
-        for (var j = 0; j < res.results.length; ++j){
-          var card = res.results[j]
-          var card_audio = {}
-          var audio_array = card.card_audio
-          for (var i = 0; i < audio_array.length; ++i) {
-            var key = audio_array[i].type
-            card_audio[key] = audio_array[i].url
-          }
-          card.card_audio = card_audio
-          results.push(card)
-        }
-        var card_list = this.data.card_data.results.concat(results)
+        var card_list = this.data.card_data.results.concat(res.results)
         var card_data = {}
         card_data.results = card_list
         card_data.count = res.count
@@ -66,8 +54,8 @@ Page({
           card_data: card_data
         })
         if(this.load){
-          var card_audio = this.data.card_data.results[0].card_audio
-          this.playWord(card_audio.Word)
+          var word_voice = this.data.card_data.results[0].word_voice
+          this.playWord(word_voice)
           this.load=false
         }
       }
@@ -122,7 +110,7 @@ Page({
       'page_number.current': current+1
     })
     // auto play word when change card
-    var url = this.data.card_data.results[current].card_audio.Word
+    var url = this.data.card_data.results[current].word_voice
     this.playWord(url)
     
     var length = this.data.card_data.results.length

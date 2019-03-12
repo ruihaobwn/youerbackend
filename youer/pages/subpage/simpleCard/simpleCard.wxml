@@ -4,7 +4,7 @@
   <swiper current='{{swiper_props.current}}' style='{{card_style}}' bindchange='changeCurrent'>
     <swiper-item wx:for="{{card_data.results}}">
 
-      <image style='width:100%;height:100%;' src="{{item.picture}}" catchtap='play_word' data-url="{{item.card_audio.Word}}">
+      <image style='width:100%;height:100%;' src="{{item.picture}}" catchtap='play_word' data-url="{{item.word_voice}}">
       </image>
     </swiper-item>
   </swiper>

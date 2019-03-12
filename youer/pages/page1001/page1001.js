@@ -10,7 +10,7 @@ Page({
         "autoplay": true,
         "interval": 2,
         "indicatorActiveColor": "#000000",
-        "indicatorColor": "rgba(0, 0, 0, .3)",
+        "indicatorColor": "rgba(0, 0, 0, .3)"
       }
     },
     // 游戏模块功能，暂时不使用
