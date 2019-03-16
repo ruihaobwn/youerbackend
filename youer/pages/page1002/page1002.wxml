@@ -1,8 +1,4 @@
-<import src="/components/templates/templates.wxml" />
 <view class="app">
-  <view class="ele-container">
-    <template is="zcCarousel" data="{{data:carousel1}}"></template>
-  </view>
   <view class="flex-container" style='{{bookType.style}}'>
     <view wx:for="{{bookType.content}}" class='flex-item' style='{{item.style}}' wx:key="{{item.itemIndex}}" catchtap='getBooks' data-typeid='{{item.itemIndex}}' data-title='{{item.text}}'>
       <image style='{{item.pic_style}}' src="{{item.pic}}"></image>

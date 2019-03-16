@@ -5,5 +5,5 @@ from .. import filters
 
 class BookPageViewSet(ReadOnlyModelViewSet):
     filter_class = filters.BookPageFilter
-    queryset = models.BookPage.objects.all()
+    queryset = models.BookPage.objects.all().order_by('page_num')
     serializer_class = serializers.BookPageSerializer

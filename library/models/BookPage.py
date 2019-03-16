@@ -11,6 +11,7 @@ class BookPage(BaseModel):
     audio_url = models.FileField(verbose_name=u'音频', max_length=80, null=True, blank=True)
     book = models.ForeignKey(Book, on_delete=models.CASCADE, null=True, blank=True)
     volume = models.ForeignKey(Volume, on_delete=models.CASCADE, null=True, blank=True)
+    page_num = models.IntegerField(verbose_name='页码', default=0)
 
     class Meta:
         verbose_name = '绘本页'

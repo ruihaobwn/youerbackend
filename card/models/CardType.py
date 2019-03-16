@@ -16,7 +16,7 @@ class CardType(BaseModel):
         verbose_name_plural = '卡片类别'
 
     def __str__(self):
-        return self.title
+        return '{}-{}'.format(self.product, self.title)
 
 
 @receiver(models.signals.post_delete, sender=CardType)

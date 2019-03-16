@@ -3,15 +3,6 @@
   <view class="ele-container">
     <template is="zcCarousel" data="{{data:carousel1}}"></template>
   </view>
-  <view wx:if="{{!free_vessel2.hidden}}" class="ele-container">
-    <view style="{{free_vessel2.style}}">
-      <block wx:for="{{free_vessel2.content}}" wx:key="{{item.itemIndex}}">
-        <view class="element picture" style="{{item.style}}">
-          <image src="{{item.content}}" mode="scaleToFill"></image>
-        </view>
-      </block>
-    </view>
-  </view>
   <view class="ele-container">
     <view style="{{free_vessel3.style}}">
       <block wx:for="{{free_vessel3.content}}">

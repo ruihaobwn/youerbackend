@@ -13,24 +13,6 @@ Page({
         "indicatorColor": "rgba(0, 0, 0, .3)"
       }
     },
-    // 游戏模块功能，暂时不使用
-    "free_vessel2": {
-      "hidden": true,
-      "style": "width:750rpx;height:420rpx;background-color:rgb(255, 255, 255);",
-      "content": [{
-        "style": "height:375rpx;width:304rpx;position:absolute;left:20rpx;top:20rpx;",
-        "content": "http:\/\/img.zhichiwangluo.com\/zcimgdir\/album\/file_5b557bf437e3c.png",
-        "itemIndex": 0
-      }, {
-        "style": "height:178rpx;width:387rpx;position:absolute;left:350rpx;top:23rpx;",
-        "content": "http:\/\/img.zhichiwangluo.com\/zcimgdir\/album\/file_5b557bf1830ed.png",
-        "itemIndex": 1
-      }, {
-        "style": "height:178rpx;width:387rpx;position:absolute;left:350rpx;top:215rpx;",
-        "content": "http:\/\/img.zhichiwangluo.com\/zcimgdir\/album\/file_5b557bf2e6439.png",
-        "itemIndex": 2
-      }]
-    },
     "free_vessel3": {
       "style": "width:750rpx;height:105rpx;background-color:rgb(255, 255, 255);margin-top:12rpx;",
       "content": [{

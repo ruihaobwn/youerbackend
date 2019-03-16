@@ -9,9 +9,13 @@ class ProductTypeAdmin(admin.ModelAdmin):
 
 @admin.register(models.CardType)
 class CardTypeAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'image_file', 'voice_num')
+    list_display = ('id', 'product', 'title', 'image_file', 'voice_num')
 
 
 @admin.register(models.Card)
 class CardAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'picture', 'card_type', 'video')
+    list_display = ('name', 'page_num', 'picture', 'card_type', 'video')
+    search_fields = ('name',)
+    list_filter = ('card_type',)
+
+

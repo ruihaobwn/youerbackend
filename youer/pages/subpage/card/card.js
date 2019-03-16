@@ -9,12 +9,14 @@ Page({
       text: '翻页关',
       src: '/images/pageopen.png'
     },
-    
+    pronounce:{
+      style: "position:absolute;right:40rpx;top:120rpx",
+      text: '英式'
+    },
     page_number: {
       style: "position:absolute;top:0rpx;left:30rpx",
       current: 1
     },
-
     pagination: {
       limit: 10,
       offset: 0
@@ -22,10 +24,11 @@ Page({
     // 发音点击区域
     voice_area: {
       // 单词发音
-      word_style: "position:absolute;height:50vh;width:70vw;left:15vw;top:10vh",
-      sentence_style: "position:absolute;height:10vh;width:90vw;left:5vw;top:63vh"
+      word_style: "position:absolute;height:65vh;width:70vw;left:15vw;top:10vh;",
+      sentence_style: "position:absolute;height:10vh;width:90vw;left:5vw;top:80vh;"
     },
-    card_style: "height:80vh;width:100wh",
+    card_style: "height:100vh;width:100wh",
+    menu_style: "position:absolute;bottom:0;left:0;right:0;",
     swiper_props: {
       current: 0,
       autoplay: true
@@ -54,7 +57,10 @@ Page({
           card_data: card_data
         })
         if(this.load){
-          var word_voice = this.data.card_data.results[0].word_voice
+          var word_voice = this.data.card_data.results[0].en_word_voice
+          if (this.data.pronounce.text=='美式'){
+            word_voice = this.data.card_data.results[0].am_word_voice
+          }
           this.playWord(word_voice)
           this.load=false
         }
@@ -110,7 +116,10 @@ Page({
       'page_number.current': current+1
     })
     // auto play word when change card
-    var url = this.data.card_data.results[current].word_voice
+    var url = this.data.card_data.results[current].en_word_voice
+    if (this.data.pronounce.text == '美式'){
+      url = this.data.card_data.results[current].am_word_voice
+    }
     this.playWord(url)
     
     var length = this.data.card_data.results.length
@@ -145,9 +154,24 @@ Page({
       })
     }
   },
+  changePronounce: function(e){
+    if (this.data.pronounce.text == '英式'){
+      this.data.pronounce.text = '美式'
+    }else{
+      this.data.pronounce.text = '英式'
+    }
+    this.setData({
+      pronounce: this.data.pronounce
+    })
+  },
+
   play_word: function(e){
     var dataset = e.currentTarget.dataset
-    this.playWord(dataset.url)
+    var url = dataset.enurl
+    if (this.data.pronounce.text == '美式'){
+      url = dataset.amurl
+    }
+    this.playWord(url)
   },
 
   playWord: function(url){

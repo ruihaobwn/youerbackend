@@ -35,6 +35,6 @@ App({
   },
   globalData: {
     userInfo: null,
-    siteBaseUrl: 'http://localhost:8000/api/v1'
+    siteBaseUrl: 'http://192.168.1.149:8000/api/v1'
   }
 })

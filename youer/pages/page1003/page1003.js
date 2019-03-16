@@ -3,16 +3,6 @@ var request = require('../../utils/request.js')
 
 Page({
   data: {
-    "carousel1": {
-      "style": "height:370rpx;width:750rpx;",
-      "content": [],
-      "customFeature": {
-        "autoplay": true,
-        "interval": 2,
-        "indicatorActiveColor": "#000000",
-        "indicatorColor": "rgba(0, 0, 0, .3)",
-      }
-    },
     "videoType": {
       "style": "width:682rpx; margin-left:auto;margin-right:auto;margin-top:18rpx;",
       "content": []
@@ -27,24 +17,6 @@ Page({
   },
 
   onLoad: function () {
-    request.sendRequest({
-      url: '/poster',
-      data: {
-        type: 'Video'
-      },
-      success: res => {
-        const results = res.results
-        const carousel = results.map((item) => {
-          const oneItem = {};
-          oneItem.pic = item.image;
-          oneItem.name = item.name;
-          return oneItem
-        });
-        this.setData({
-          'carousel1.content': carousel
-        })
-      }
-    })
     request.sendRequest({
       url: '/video/video_type',
       data: {

@@ -7,7 +7,7 @@ from .. import filters
 
 class CardViewSet(ReadOnlyModelViewSet):
     filter_class = filters.CardFilter
-    queryset = Card.objects.all()
+    queryset = Card.objects.all().order_by('page_num')
     serializer_class = CardSerializer
 
     def get_serializer_class(self):
