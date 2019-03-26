@@ -1,4 +1,0 @@
-<!--pages/video/video.wxml-->
-<view>
-  <video id="video_player" class="videoplayer" src='{{src}}' controls  binderror="videoErrorCallback"></video>
-</view>

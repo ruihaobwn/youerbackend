@@ -1,7 +1,0 @@
-
-<view class="flex-container" style='{{style}}'>
-  <view wx:for="{{cardTypeList.results}}" class='flex-item' style='{{itemStyle.style}}' wx:key="{{item.id}}" catchtap="openCard" data-id='{{item.id}}' data-voicenum='{{item.voice_num}}'>
-    <image style='{{itemStyle.pic_style}}' src="{{item.image_file}}"></image>
-    <text style='{{itemStyle.text_style}}'>{{item.title}}</text>
-  </view>
-</view>
