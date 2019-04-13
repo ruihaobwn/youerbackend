@@ -92,11 +92,11 @@ WSGI_APPLICATION = 'youerbackend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'youer',
+        'NAME': 'youer_test',
         'USER': 'root',
-        'PASSWORD': 'root',
+        'PASSWORD': 'hao/1015',
         'HOST': 'localhost',
-        'PORT': 13308,
+        'PORT': 3306,
     }
 }
 
@@ -138,5 +138,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
-MEDIA_URL = '/media/'
+MEDIA_URL = '/test/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+

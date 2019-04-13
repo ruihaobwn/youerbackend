@@ -3,6 +3,7 @@ from common.models import BaseModel
 from .CardType import CardType
 import os
 from django.dispatch import receiver
+from utils.CRS import CRS
 
 
 class Card(BaseModel):
@@ -17,6 +18,7 @@ class Card(BaseModel):
                                       max_length=80)
     video = models.FileField(verbose_name=u'卡片视频', upload_to='video/card', max_length=80, null=True, blank=True)
     page_num = models.IntegerField(verbose_name=u'页码', default=0)
+    image_traget_id = models.CharField(verbose_name=u'cloud图片ID', max_length=255, null=True, blank=True)
 
     class Meta:
         verbose_name = '卡片'
@@ -31,6 +33,8 @@ def auto_delete_file_on_delete(sender, instance, **kwargs):
     if instance.picture:
         if os.path.isfile(instance.picture.path):
             os.remove(instance.picture.path)
+            CRS().delete_target(instance.image_traget_id)
+            instance.image_traget_id = None
     if instance.en_word_voice:
         if os.path.isfile(instance.en_word_voice.path):
             os.remove(instance.en_word_voice.path)
@@ -72,6 +76,8 @@ def auto_delete_file_on_change(sender, instance, **kwargs):
     if old_picture and not old_picture == new_picture:
         if os.path.isfile(old_picture.path):
             os.remove(old_picture.path)
+            CRS().delete_target(instance.image_traget_id)
+            instance.image_traget_id = None
     if old_en_word_voice and not old_en_word_voice == new_en_word_voice:
         if os.path.isfile(old_en_word_voice.path):
             os.remove(old_en_word_voice.path)
