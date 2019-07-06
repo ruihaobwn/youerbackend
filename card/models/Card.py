@@ -7,9 +7,9 @@ from utils.CRS import CRS
 
 
 class Card(BaseModel):
-    name = models.CharField(verbose_name=u'图片名称', max_length=80, unique=True)
+    name = models.CharField(verbose_name=u'图片名称', max_length=80)
     picture = models.FileField(verbose_name=u'卡片图片', max_length=80)
-    card_type = models.ForeignKey(CardType, on_delete=models.CASCADE)
+    card_type = models.ForeignKey(CardType, verbose_name='卡片类型', on_delete=models.CASCADE)
     en_word_voice = models.FileField(verbose_name=u'英式单词发音', upload_to='audio/card', max_length=80, null=True, blank=True)
     am_word_voice = models.FileField(verbose_name=u'美式单词发音', upload_to='audio/card', max_length=80, null=True, blank=True)
     en_sentence_voice = models.FileField(verbose_name=u'英式句子发音', upload_to='audio/card', null=True, blank=True,

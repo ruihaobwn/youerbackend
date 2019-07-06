@@ -6,11 +6,10 @@ from django.dispatch import receiver
 
 
 class BookPage(BaseModel):
-    title = models.CharField(verbose_name=u'主题', max_length=80, unique=True)
     picture = models.FileField(verbose_name=u'图片', max_length=80)
     audio_url = models.FileField(verbose_name=u'音频', max_length=80, null=True, blank=True)
-    book = models.ForeignKey(Book, on_delete=models.CASCADE, null=True, blank=True)
-    volume = models.ForeignKey(Volume, on_delete=models.CASCADE, null=True, blank=True)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE, verbose_name='所属子绘本', null=True, blank=True)
+    volume = models.ForeignKey(Volume, on_delete=models.CASCADE, verbose_name='所属绘本', null=True, blank=True)
     page_num = models.IntegerField(verbose_name='页码', default=0)
 
     class Meta:

@@ -21,6 +21,7 @@ from drf_yasg import openapi
 from rest_framework import permissions
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 
 api_info = openapi.Info(
@@ -51,3 +52,4 @@ urlpatterns = [
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += staticfiles_urlpatterns()

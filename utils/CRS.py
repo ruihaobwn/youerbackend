@@ -3,10 +3,10 @@ import hashlib
 import requests
 import json
 
-CLOUDKEY = 'f25473e4761a423b380d16f2bd14ae9c'
-CLOUDSECRET = 'fJ1Op3QnzVB63t8e5PvQR5QnN5hqIOLVHUqEuGOCNxzs8hfi95L0VjczPRXn01T736VWzErbShRQRjiJEe7kG9uDNzrQLUxFNr3tEMOUzzviJjgcO4u8piENTxWN8y7p'
-CLOUDSERVERURL = 'http://b2a422864857b34713b22df239e35f1a.cn1.crs.easyar.com:8888'
-CLOUDCLIENTURL = 'http://b2a422864857b34713b22df239e35f1a.cn1.crs.easyar.com:8080'
+CLOUDKEY = 'f2d6b833ac487ae0a839556af48b2145'
+CLOUDSECRET = 'HxsiuQ4CEfsiTL3IleoA2rNw69C3X3xEM8Me9PvTYP8NDqAEhqyLE7X0JU6SuIYtgzR6t70mXwQL1Ed9du5wB3lvIq9y4hBm6xxkWr5mWBy3wk4EkJSLxjCoaWccLzLt'
+CLOUDSERVERURL = 'http://6f8c562281cf9307f60e6ca7cb5de830.cn1.crs.easyar.com:8888'
+CLOUDCLIENTURL = 'http://6f8c562281cf9307f60e6ca7cb5de830.cn1.crs.easyar.com:8080'
 
 
 def _signature(params):

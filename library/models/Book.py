@@ -9,7 +9,7 @@ from django.dispatch import receiver
 class Volume(BaseModel):
     name = models.CharField(verbose_name=u'绘本名称', max_length=80, unique=True)
     picture = models.FileField(verbose_name=u'绘本图片', max_length=80)
-    book_type = models.ForeignKey(BookType, on_delete=models.CASCADE)
+    book_type = models.ForeignKey(BookType, verbose_name='绘本类别', on_delete=models.CASCADE)
     has_subbook = models.BooleanField(verbose_name='是否有子绘本', default=False)
 
     class Meta:

@@ -8,4 +8,4 @@ class CardTypeFilter(filters.FilterSet):
 
     class Meta:
         model = models.CardType
-        fields = ['title']
+        fields = ['title', 'tag']

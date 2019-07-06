@@ -9,7 +9,7 @@ class SubVideo(BaseModel):
     title = models.CharField(verbose_name=u'名称', max_length=80)
     video_url = models.FileField(verbose_name=u'视频源', max_length=80)
     image_url = models.FileField(verbose_name=u'展示图片', max_length=80)
-    video = models.ForeignKey(Video, on_delete=models.CASCADE, null=True, blank=True)
+    video = models.ForeignKey(Video, verbose_name='所属视频', on_delete=models.CASCADE, null=True, blank=True)
     description = models.TextField(verbose_name='描述')
 
     class Meta:
@@ -20,7 +20,7 @@ class SubVideo(BaseModel):
         return self.title
 
 
-@receiver(models.signals.post_delete, sender=Video)
+@receiver(models.signals.post_delete, sender=SubVideo)
 def auto_delete_file_on_delete(sender, instance, **kwargs):
     if instance.video_url:
         if os.path.isfile(instance.video_url.path):
@@ -30,7 +30,7 @@ def auto_delete_file_on_delete(sender, instance, **kwargs):
             os.remove(instance.image_url.path)
 
 
-@receiver(models.signals.pre_save, sender=Video)
+@receiver(models.signals.pre_save, sender=SubVideo)
 def auto_delete_file_on_change(sender, instance, **kwargs):
     if not instance.pk:
         return False

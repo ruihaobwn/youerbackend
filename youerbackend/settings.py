@@ -61,7 +61,7 @@ REST_FRAMEWORK = {
         'django_filters.rest_framework.DjangoFilterBackend',
     ),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 100,
+    'PAGE_SIZE': 1000,
 }
 
 ROOT_URLCONF = 'youerbackend.urls'
@@ -85,6 +85,62 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'youerbackend.wsgi.application'
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'standard': {
+            'format': '{asctime} {filename}[line:{lineno}] {levelname} {message}',
+            'datefmt': "%a, %d %b %Y %H:%M:%S",
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'standard'
+        },
+        'file_logger': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': BASE_DIR + "/logs/logs.log",
+            'maxBytes': 50000000,
+            'backupCount': 2,
+            'formatter': 'standard'
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console', 'file_logger'],
+            'propagate': True,
+            'level': 'WARN'
+        },
+        'django.request': {
+            'handlers': ['console', 'file_logger'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+        'common': {
+            'handlers': ['console', 'file_logger'],
+            'propagate': True,
+            'level': 'DEBUG',
+        },
+        'card': {
+            'handlers': ['console', 'file_logger'],
+            'level': 'DEBUG',
+        },
+        'library': {
+            'handlers': ['console', 'file_logger'],
+            'level': 'DEBUG',
+        },
+        'video': {
+            'handlers': ['console', 'file_logger'],
+            'level': 'DEBUG',
+        },
+    }
+}
+
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
@@ -92,7 +148,7 @@ WSGI_APPLICATION = 'youerbackend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'youer_test',
+        'NAME': 'youershuo',
         'USER': 'root',
         'PASSWORD': 'hao/1015',
         'HOST': 'localhost',
@@ -133,12 +189,17 @@ USE_L10N = True
 
 USE_TZ = True
 
+SITE_URL = "https://youershuo.online"
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
-MEDIA_URL = '/test/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+#STATIC_ROOT = 'static/'
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = os.path.join("/root/files/media")
+#MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 

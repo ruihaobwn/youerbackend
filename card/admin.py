@@ -4,12 +4,14 @@ from card import models
 
 @admin.register(models.ProductType)
 class ProductTypeAdmin(admin.ModelAdmin):
-    list_display = ('id', 'sup_type', 'sub_type', 'image')
+    list_display = ('sup_type', 'sub_type', 'image', 'id')
 
 
 @admin.register(models.CardType)
 class CardTypeAdmin(admin.ModelAdmin):
-    list_display = ('id', 'product', 'title', 'image_file', 'voice_num')
+    list_display = ('product','tag', 'title', 'image_file', 'voice_num', 'id')
+    search_fields = ('title',)
+    list_filter = ('product',)
 
 
 @admin.register(models.Card)

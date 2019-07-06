@@ -10,7 +10,7 @@ class Command(BaseCommand):
     help = "sync image to cloud recognition service"
 
     def handle(self, *args, **options):
-        no_target_cards = Card.objects.filter(Q(image_traget_id__isnull=True) | Q(image_traget_id=''))
+        no_target_cards = Card.objects.filter(image_traget_id__isnull=True)
         for card in no_target_cards:
             if os.path.isfile(card.picture.path):
                 image_path = card.picture.path
@@ -19,15 +19,19 @@ class Command(BaseCommand):
                 if image_body:
                     params = {
                         "image": base64.b64encode(image_body).decode(),
-                        "name": 'maize',
+                        "name": card.name,
                         "size": "8",
-                        "meta": 10,
+                        "meta": card.id,
                         "type": "ImageTarget",
                     }
-                    res = CRS().create_target(params)
-                    if res.statusCode == 0:
-                        result = res['result']
-                        target_id = result['targetId']
-                        card.image_traget_id = target_id
-                        card.save()
-
+                    try:
+                        res = CRS().create_target(params)
+                        if res['statusCode'] == 0:
+                            result = res['result']
+                            target_id = result['targetId']
+                            card.image_traget_id = target_id
+                            card.save()
+                        else:
+                            print("相似:"+card.name)
+                    except Exception as e :
+                        print("错误" + card.name)

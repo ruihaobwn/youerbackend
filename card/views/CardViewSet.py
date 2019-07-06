@@ -10,6 +10,9 @@ import requests
 import json
 import base64
 from utils import CRS
+import logging
+
+log = logging.getLogger(__name__)
 
 
 class CardViewSet(ReadOnlyModelViewSet):
@@ -22,8 +25,7 @@ class CardViewSet(ReadOnlyModelViewSet):
         title = params.get('title')
         if title:
             return CardNameSerializer
-        else:
-            return CardSerializer
+        return CardSerializer
 
     @action(detail=False, methods=['post'])
     def recognize(self, request, *args, **kwargs):
@@ -47,13 +49,18 @@ class CardViewSet(ReadOnlyModelViewSet):
         params['signature'] = m.hexdigest()
         try:
             url = CRS.CLOUDCLIENTURL + '/search'
+            log.debug(url)
             res = requests.post(url, headers={'Content-Type': 'application/json', 'charset': 'utf-8'}, data=json.dumps(params))
             res.raise_for_status()
             result = res.json()['result']
-            meta = result.get('target').get('meta')
-            card_id = base64.b64decode(meta)
+            log.debug(result)
+            card_id = result.get('target').get('meta')
             card =  Card.objects.get(id=card_id)
-            card_type_id = card.card_type.id
-            return Response({"statusCode": 0, "id": card_id, "card_type_id": card_type_id, 'page_num': card.page_num})
+            card_type = card.card_type
+            card_type_id = card_type.id
+            voice_num = card_type.voice_num
+            return Response({"statusCode": 0, "id": card_id, "type_id": card_type_id, 'page_num': card.page_num,
+                             'voice_num': voice_num})
         except requests.exceptions.HTTPError as e:
-            return Response(res.json())
+            log.error(e)
+            return Response({"statusCode":-1})

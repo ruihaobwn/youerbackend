@@ -7,8 +7,9 @@ from django.dispatch import receiver
 
 class CardType(BaseModel):
     title = models.CharField(verbose_name=u'卡片类别名称', max_length=80)
+    tag = models.CharField(verbose_name=u'标记', max_length=30, null=True, blank=True)
     image_file = models.FileField(verbose_name=u'图片')
-    product = models.ForeignKey(ProductType, on_delete=models.CASCADE)
+    product = models.ForeignKey(ProductType, verbose_name='产品', on_delete=models.CASCADE)
     voice_num = models.IntegerField(verbose_name='发音区域数', default=1)
 
     class Meta:

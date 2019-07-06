@@ -5,4 +5,4 @@ from library.models import BookPage
 class BookPageSerializer(BaseSerializer):
     class Meta:
         model = BookPage
-        fields = ('id', 'title', 'picture', 'audio_url')
+        fields = ('id', 'picture', 'audio_url')

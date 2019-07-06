@@ -12,3 +12,4 @@ class CardNameSerializer(BaseSerializer):
     class Meta:
         model = Card
         fields = ('id', 'name', )
+
