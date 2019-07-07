@@ -15,11 +15,10 @@ class CardTypeViewSet(ReadOnlyModelViewSet):
         params = self.request.query_params
         list_tag = params.get('list_tag')
         if list_tag:
-            tags = CardType.objects.filter(product=params.get('product')).order_by('tag').values_list('tag', flat=True)
+            tags = CardType.objects.filter(product=params.get('product')).order_by('tag_order').distinct().values_list('tag', flat=True)
             # remove None
             tags = filter(None, tags)
-            # remove 重
-            tags = list(set(tags))
+            tags = list(tags)
             return Response(data=tags)
         return super(CardTypeViewSet, self).list(request, *args, **kwargs)
 

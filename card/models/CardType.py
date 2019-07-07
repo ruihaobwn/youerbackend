@@ -11,6 +11,7 @@ class CardType(BaseModel):
     image_file = models.FileField(verbose_name=u'图片')
     product = models.ForeignKey(ProductType, verbose_name='产品', on_delete=models.CASCADE)
     voice_num = models.IntegerField(verbose_name='发音区域数', default=1)
+    tag_order = models.IntegerField(verbose_name=u'标记顺序', default=1)
 
     class Meta:
         verbose_name = '卡片类别'
