@@ -190,6 +190,7 @@ USE_L10N = True
 USE_TZ = True
 
 SITE_URL = "https://youershuo.online"
+ENV = os.getenv('ENV', '')
 
 
 # Static files (CSS, JavaScript, Images)
