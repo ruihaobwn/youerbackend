@@ -18,7 +18,8 @@ class Card(BaseModel):
                                       max_length=80)
     video = models.FileField(verbose_name=u'卡片视频', upload_to='video/card', max_length=80, null=True, blank=True)
     page_num = models.IntegerField(verbose_name=u'页码', default=0)
-    image_traget_id = models.CharField(verbose_name=u'cloud图片ID', max_length=255, null=True, blank=True)
+    recognize_word = models.CharField(verbose_name=u'识别文字', max_length=100, null=True, blank=True)
+    recognize_text = models.TextField(verbose_name=u'所有文字',null=True,blank=True)
 
     class Meta:
         verbose_name = '卡片'

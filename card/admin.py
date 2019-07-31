@@ -16,6 +16,6 @@ class CardTypeAdmin(admin.ModelAdmin):
 
 @admin.register(models.Card)
 class CardAdmin(admin.ModelAdmin):
-    list_display = ('name', 'page_num', 'picture', 'card_type', 'video', 'id')
+    list_display = ('name', 'page_num', 'picture', 'card_type', 'video', 'id', 'recognize_word')
     search_fields = ('name',)
     list_filter = ('card_type',)
