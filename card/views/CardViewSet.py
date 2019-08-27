@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from card.models import Card
 from card.serializers import CardSerializer, CardNameSerializer
 from .. import filters
+from django.core.files.storage import FileSystemStorage
 import time
 import hashlib
 import requests
@@ -11,6 +12,8 @@ import json
 import base64
 from utils import CRS, OCR
 from utils.ApiOcr import client
+from django.conf import settings
+from utils import Turi
 import logging
 
 log = logging.getLogger(__name__)
@@ -34,7 +37,7 @@ class CardViewSet(ReadOnlyModelViewSet):
         image_body = image.read()
         params = {
             "notracking": "true",
-            "timestamp":int(time.time() * 1000),
+            "timestamp": int(time.time() * 1000),
             "appKey": CRS.CLOUDKEY,
             "image": base64.b64encode(image_body).decode()
         }
@@ -51,12 +54,13 @@ class CardViewSet(ReadOnlyModelViewSet):
         try:
             url = CRS.CLOUDCLIENTURL + '/search'
             log.debug(url)
-            res = requests.post(url, headers={'Content-Type': 'application/json', 'charset': 'utf-8'}, data=json.dumps(params))
+            res = requests.post(url, headers={'Content-Type': 'application/json', 'charset': 'utf-8'},
+                                data=json.dumps(params))
             res.raise_for_status()
             result = res.json()['result']
             log.debug(result)
             card_id = result.get('target').get('meta')
-            card =  Card.objects.get(id=card_id)
+            card = Card.objects.get(id=card_id)
             card_type = card.card_type
             card_type_id = card_type.id
             voice_num = card_type.voice_num
@@ -64,43 +68,28 @@ class CardViewSet(ReadOnlyModelViewSet):
                              'voice_num': voice_num})
         except requests.exceptions.HTTPError as e:
             log.error(e)
-            return Response({"statusCode":-1})
+            return Response({"statusCode": -1})
 
-    # 腾讯OCR
-    # @action(detail=False, methods=['post'])
-    # def word_recognize(self, request, *arg, **kwargs):
-    #     image = request.FILES.get("image", None)
-    #     image_body = image.read()
-    #     image_base64Str = base64.b64encode(image_body).decode()
-    #     tencent_api = OCR.TencentAPIMsg()
-    #     req_dict = {"image": image_base64Str}
-    #     sign = tencent_api.gen_req_dict(req_dict=req_dict)
-    #     req_dict["sign"] = sign
-    #     url = "https://api.ai.qq.com/fcgi-bin/ocr/ocr_generalocr"
-    #     resp = requests.post(url, data=req_dict)
-    #     results = resp.json()
-    #     if results.get('ret') == 0:
-    #         data = results["data"]
-    #         recognize_str = ''
-    #         print(data)
-    #         for item in data["item_list"]:
-    #             recognize_str += item['itemstring']
-    #         print(recognize_str)
-    #         card = Card.objects.get(recognize_word=recognize_str)
-    #         card_type = card.card_type
-    #         card_type_id = card_type.id
-    #         voice_num = card_type.voice_num
-    #         return Response({"statusCode": 0, "id": card.id, "type_id": card_type_id, 'page_num': card.page_num,
-    #                          'voice_num': voice_num})
-    #     return Response()
-
-    # 百度OCR
     @action(detail=False, methods=['post'])
     def word_recognize(self, request, *arg, **kwargs):
+        image = request.FILES["image"]
+        image_path = '{}/recognize'.format(settings.MEDIA_ROOT)
+        fs = FileSystemStorage(location=image_path)
+        filename = fs.save(image.name, image)
+        image_recognize_id = Turi.find_image('{}/{}'.format(image_path, filename))
+        print(image_recognize_id)
+        card = Card.objects.get(recognize_id=image_recognize_id)
+        card_type = card.card_type
+        card_type_id = card_type.id
+        voice_num = card_type.voice_num
+        return Response({"statusCode": 0, "id": card.id, "type_id": card_type_id, 'page_num': card.page_num,
+                         'voice_num': voice_num})
+
+    @action(detail=False, methods=['post'])
+    def image_recognize(self, request, *arg, **kwargs):
         image = request.FILES.get("image", None)
         image_body = image.read()
         res = client.basicGeneral(image_body)
-
         recognize_str = res["words_result"][0]["words"]
         card_set = Card.objects.filter(recognize_word__iexact=recognize_str)
         card_num = card_set.count()

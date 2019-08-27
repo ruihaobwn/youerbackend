@@ -8,7 +8,7 @@ from django.dispatch import receiver
 class Video(BaseModel):
     title = models.CharField(verbose_name=u'名称', max_length=80)
     image_file = models.FileField(verbose_name=u'图片', max_length=80)
-    video_url = models.FileField(verbose_name=u'视频源', max_length=80, null=True, blank=True)
+    video_url = models.FileField(verbose_name=u'视频源',upload_to='video/movie', max_length=80, null=True, blank=True)
     video_type = models.ForeignKey(VideoType, verbose_name='视频类型', on_delete=models.CASCADE)
     has_subvideo = models.BooleanField(verbose_name=u'是否有子视频', default=False)
 
