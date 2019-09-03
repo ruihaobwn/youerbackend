@@ -11,7 +11,7 @@ log = logging.getLogger(__name__)
 
 
 class VideoViewSet(ReadOnlyModelViewSet):
-    filter_class = filters.VideoFilter
+    filterset_class = filters.VideoFilter
     queryset = models.Video.objects.all()
     serializer_class = serializers.VideoSerializer
 

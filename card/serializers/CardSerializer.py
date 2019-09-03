@@ -15,3 +15,9 @@ class CardNameSerializer(BaseSerializer):
     class Meta:
         model = Card
         fields = ('id', 'name',)
+
+
+class CardVideoSerializer(BaseSerializer):
+    class Meta:
+        model = Card
+        fields = ('id', 'video',)

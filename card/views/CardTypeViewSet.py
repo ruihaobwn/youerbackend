@@ -7,7 +7,7 @@ from .. import filters
 
 
 class CardTypeViewSet(ReadOnlyModelViewSet):
-    filter_class = filters.CardTypeFilter
+    filterset_class = filters.CardTypeFilter
     queryset = CardType.objects.all()
     serializer_class = CardTypeSerializer
 

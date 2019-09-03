@@ -2,7 +2,8 @@ from rest_framework.viewsets import ReadOnlyModelViewSet
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from card.models import Card
-from card.serializers import CardSerializer, CardNameSerializer
+from card.serializers import CardSerializer
+from card.serializers.CardSerializer import CardVideoSerializer
 from .. import filters
 from django.core.files.storage import FileSystemStorage
 import time
@@ -20,15 +21,15 @@ log = logging.getLogger(__name__)
 
 
 class CardViewSet(ReadOnlyModelViewSet):
-    filter_class = filters.CardFilter
+    filterset_class = filters.CardFilter
     queryset = Card.objects.all().order_by('page_num')
     serializer_class = CardSerializer
 
     def get_serializer_class(self):
         params = self.request.query_params
-        title = params.get('title')
-        if title:
-            return CardNameSerializer
+        video = params.get('video')
+        if video:
+            return CardVideoSerializer
         return CardSerializer
 
     @action(detail=False, methods=['post'])

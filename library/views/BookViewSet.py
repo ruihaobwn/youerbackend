@@ -4,12 +4,12 @@ from .. import filters
 
 
 class BookViewSet(ReadOnlyModelViewSet):
-    filter_class = filters.BookFilter
+    filterset_class = filters.BookFilter
     queryset = models.Book.objects.all()
     serializer_class = serializers.BookSerializer
 
 
 class VolumeViewSet(ReadOnlyModelViewSet):
-    filter_class = filters.VolumeFilter
+    filterset_class = filters.VolumeFilter
     queryset = models.Volume.objects.all()
     serializer_class = serializers.VolumeSerializer

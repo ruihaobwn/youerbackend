@@ -5,6 +5,6 @@ from .. import filters
 
 
 class ProductTypeViewSet(ReadOnlyModelViewSet):
-    filter_class = filters.ProductTypeFilter
+    filterset_class = filters.ProductTypeFilter
     queryset = ProductType.objects.all()
     serializer_class = ProductTypeSerializer

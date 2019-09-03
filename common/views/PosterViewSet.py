@@ -5,7 +5,7 @@ from common import filters
 
 
 class PosterViewSet(ReadOnlyModelViewSet):
-    filter_class = filters.PosterFilter
+    filterset_class = filters.PosterFilter
 
     queryset = Poster.objects.all()
     serializer_class = PosterSerializer
