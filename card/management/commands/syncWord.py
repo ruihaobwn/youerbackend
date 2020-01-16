@@ -22,6 +22,7 @@ class Command(BaseCommand):
                 if image_body:
                     try:
                         res = client.basicGeneral(image_body)
+                        print(res)
                         text = res["words_result"][0]["words"]
                         card.recognize_word = text
                         words_dict_list = res["words_result"]
